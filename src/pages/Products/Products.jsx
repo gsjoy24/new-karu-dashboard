@@ -14,7 +14,6 @@ import {
 import { Stack } from '@mui/system';
 import { useState } from 'react';
 import { useGetProductsQuery } from '../../redux/features/productApi';
-import CreateProductModal from './components/CreateProductModal';
 // import DeleteProduct from './components/DeleteProduct';
 // import UpdatedProduct from './components/UpdatedProduct';
 
@@ -44,7 +43,6 @@ const Products = () => {
 				<Typography variant='h4' sx={{ mt: 2 }}>
 					Product List
 				</Typography>
-				<CreateProductModal />
 			</Stack>
 
 			<TableContainer component={Paper} sx={{ my: 3, borderRadius: 5 }}>

@@ -9,7 +9,8 @@ const productApi = baseApi.injectEndpoints({
 					method: 'POST',
 					body: data
 				};
-			}
+			},
+			invalidatesTags: ['products']
 		}),
 		getProducts: builder.query({
 			query: () => {
@@ -17,7 +18,8 @@ const productApi = baseApi.injectEndpoints({
 					url: `/products`,
 					method: 'GET'
 				};
-			}
+			},
+			providesTags: ['products']
 		})
 	})
 });

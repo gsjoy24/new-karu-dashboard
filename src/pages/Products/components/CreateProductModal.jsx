@@ -1,15 +1,14 @@
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-import Chip from '@mui/material/Chip';
+import { Button } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import KForm from '../../../components/Form/KForm';
+import KInput from '../../../components/Form/KInput';
 import CGModal from '../../../components/Modal/CGModal';
 import { useAddProductMutation } from '../../../redux/features/productApi';
 
 const CreateProductModal = () => {
 	const [modalOpen, setModalOpen] = useState(false);
-	const { handleSubmit, control, reset } = useForm();
 
 	const toggleModal = () => setModalOpen((prev) => !prev);
 	const [addProduct, { isLoading }] = useAddProductMutation();
@@ -23,7 +22,6 @@ const CreateProductModal = () => {
 					id: toastId,
 					duration: 2000
 				});
-				reset();
 				setModalOpen(false);
 			} else {
 				toast.error(res?.error?.data?.message ?? 'Something went wrong', {
@@ -41,78 +39,19 @@ const CreateProductModal = () => {
 				Add Product
 			</Button>
 			<CGModal open={modalOpen} handleClose={toggleModal}>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<Box sx={{ textAlign: 'center' }}>
-						<Grid container spacing={2}>
-							<Grid item xs={6}>
-								<Controller
-									name='productCode'
-									control={control}
-									defaultValue=''
-									render={({ field }) => (
-										<TextField
-											{...field}
-											type='text'
-											label='Product Code'
-											variant='outlined'
-											margin='normal'
-											fullWidth
-										/>
-									)}
-								/>
-							</Grid>
-							<Grid item xs={6}>
-								<Controller
-									name='productName'
-									control={control}
-									defaultValue=''
-									required={true}
-									render={({ field }) => (
-										<TextField {...field} label='Product Name' variant='outlined' margin='normal' fullWidth />
-									)}
-								/>
-							</Grid>
-							<Grid item xs={6}>
-								<Controller
-									name='productLink'
-									control={control}
-									defaultValue=''
-									render={({ field }) => (
-										<TextField {...field} label='Product Link' variant='outlined' margin='normal' fullWidth />
-									)}
-								/>
-							</Grid>
-							<Grid item xs={6}>
-								<Controller
-									name='couponDiscount'
-									control={control}
-									defaultValue=''
-									required={true}
-									render={({ field }) => (
-										<TextField {...field} label='Coupon Discount' variant='outlined' margin='normal' fullWidth />
-									)}
-								/>
-
-								{discounts?.length > 0 ? (
-									<Stack direction='row' gap={1}>
-										{discounts?.map((dis) => (
-											<Chip key={dis} label={dis} />
-										))}
-									</Stack>
-								) : (
-									<Typography variant='body2' textAlign='left'>
-										Enter all coupon discounts and separate them with a comma. (100, 200)
-									</Typography>
-								)}
-							</Grid>
-						</Grid>
-						<Box mt={2} sx={{ textAlign: 'center' }}>
-							<Button variant='contained' type='submit' disabled={isLoading}>
-								Create
-							</Button>
-						</Box>
-					</Box>
-				</form>
+				<KForm onSubmit={onSubmit}>
+					<KInput name='name' label='Name' />
+					<KInput name='stock' label='Stock' type='number' />
+					<KInput name='price' label='Price' type='number' />
+					<Stack direction='row' spacing={2} mt={2}>
+						<Button type='submit' variant='contained' disabled={isLoading}>
+							{isLoading ? 'Creating...' : 'Create'}
+						</Button>
+						<Button variant='outlined' onClick={toggleModal}>
+							Cancel
+						</Button>
+					</Stack>
+				</KForm>
 			</CGModal>
 		</>
 	);
