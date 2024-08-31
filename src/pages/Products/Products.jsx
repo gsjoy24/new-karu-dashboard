@@ -1,7 +1,5 @@
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {
 	Box,
-	Chip,
 	Pagination,
 	Paper,
 	Skeleton,
@@ -15,12 +13,10 @@ import {
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { selectCurrentUser } from '../../redux/features/auth/authSlice';
+import { useGetProductsQuery } from '../../redux/features/productApi';
 import CreateProductModal from './components/CreateProductModal';
-import DeleteProduct from './components/DeleteProduct';
-import UpdatedProduct from './components/UpdatedProduct';
+// import DeleteProduct from './components/DeleteProduct';
+// import UpdatedProduct from './components/UpdatedProduct';
 
 const Products = () => {
 	const [page, setPage] = useState(1);
@@ -28,16 +24,13 @@ const Products = () => {
 	if (page) {
 		query['page'] = page;
 	}
-	const data = [];
+	const { data, isFetching } = useGetProductsQuery(query);
 
 	const handlePageChange = (event, value) => {
 		setPage(value);
 	};
 
-	const tableHeadings = ['#', 'Product Code', 'Product Name', 'Product Link', 'Discounts', 'Calls'];
-	const loggedUser = useSelector(selectCurrentUser);
-
-	loggedUser?.role === 'super_admin' && tableHeadings.push('Actions');
+	const tableHeadings = ['#', 'Name', 'Stock', 'Price', 'Actions'];
 
 	return (
 		<Box
@@ -51,8 +44,9 @@ const Products = () => {
 				<Typography variant='h4' sx={{ mt: 2 }}>
 					Product List
 				</Typography>
-				{loggedUser?.role === 'super_admin' && <CreateProductModal />}
+				<CreateProductModal />
 			</Stack>
+
 			<TableContainer component={Paper} sx={{ my: 3, borderRadius: 5 }}>
 				{isFetching ? (
 					<Table sx={{ minWidth: 650 }} size='medium' aria-label='a dense table'>
@@ -89,7 +83,7 @@ const Products = () => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{products?.data?.map((product, index) => (
+							{data?.data?.map((product, index) => (
 								<TableRow key={product._id}>
 									<TableCell
 										align='center'
@@ -105,10 +99,10 @@ const Products = () => {
 										scope='row'
 										sx={{ fontSize: '16px', fontWeight: 'semibold' }}
 									>
-										{product?.productCode}
+										{product?.name}
 									</TableCell>
 									<TableCell align='center' sx={{ fontSize: '16px', fontWeight: 'semibold' }}>
-										{product?.productName}
+										{product?.stock}
 									</TableCell>
 									<TableCell
 										align='center'
@@ -118,44 +112,25 @@ const Products = () => {
 											color: '#000'
 										}}
 									>
-										<Link to={product?.productLink}>
-											<OpenInNewIcon
-												style={{
-													color: '#555'
-												}}
-											/>
-										</Link>
+										{product?.last_price}
 									</TableCell>
-									<TableCell align='center' sx={{ fontSize: '16px', fontWeight: 'semibold' }}>
-										{product?.couponDiscount?.map((dis) => (
-											<Chip
-												key={dis}
-												label={dis}
-												sx={{
-													m: '2px'
-												}}
-											/>
-										))}
+									<TableCell align='center'>
+										<Stack direction='row' spacing={1}>
+											{/* <UpdatedProduct product={product} />
+											<DeleteProduct id={product._id} /> */}
+										</Stack>
 									</TableCell>
-									<TableCell align='center' sx={{ fontSize: '16px', fontWeight: 'semibold' }}>
-										d
-									</TableCell>
-									{loggedUser?.role === 'super_admin' && (
-										<TableCell align='center' sx={{ fontSize: '16px', fontWeight: 'semibold' }}>
-											<UpdatedProduct product={product} />
-											<DeleteProduct id={product._id} />
-										</TableCell>
-									)}
 								</TableRow>
 							))}
 						</TableBody>
 					</Table>
 				)}
 			</TableContainer>
-			{products?.meta && (
+
+			{data?.meta && (
 				<Box display='flex' justifyContent='center' sx={{ my: 3 }}>
 					<Pagination
-						count={products?.meta?.totalPage}
+						count={data?.meta?.totalPage}
 						page={page}
 						onChange={handlePageChange}
 						color='primary'
