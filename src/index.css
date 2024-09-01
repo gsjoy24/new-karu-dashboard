@@ -1,9 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-* {
-	margin: 0;
-	padding: 0;
+
+ul {
+	list-style: disc outside;
+	margin: revert;
+	padding-left: 1.5rem;
+}
+
+ol {
+	list-style: decimal outside;
+	margin: revert;
+	padding-left: 1.5rem;
+}
+
+li {
+	@apply mb-1;
 }
 
 h1 {
@@ -23,16 +35,4 @@ h5 {
 }
 h6 {
 	@apply text-base;
-}
-
-ul {
-	@apply list-outside list-disc;
-}
-
-li {
-	@apply mb-1;
-}
-
-ol {
-	@apply list-outside list-decimal;
 }

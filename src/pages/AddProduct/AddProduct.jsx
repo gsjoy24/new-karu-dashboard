@@ -1,15 +1,18 @@
 import { Button, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import KForm from '../../components/Form/KForm';
 import KInput from '../../components/Form/KInput';
 import KSelect from '../../components/Form/KSelect';
 import TextEditor from '../../components/TextEditor';
 import { useGetCategoryQuery } from '../../redux/features/categoryApi';
+import { useAddProductMutation } from '../../redux/features/productApi';
 
 const AddProduct = () => {
+	const navigate = useNavigate();
 	const { data: categories } = useGetCategoryQuery({});
-
 	const categoryOptions = categories?.data?.map((category) => ({ value: category._id, label: category.name })) || [];
 
 	const subCategoryOptions =
@@ -19,8 +22,43 @@ const AddProduct = () => {
 			.map((subCategory) => ({ value: subCategory._id, label: subCategory.name })) || [];
 	const [description, setDescription] = useState('');
 
-	const onSubmit = (data) => {
-		console.log(data);
+	const [addProduct, { isLoading }] = useAddProductMutation();
+
+	const onSubmit = async (data) => {
+		const tags = data.tags.split(',').map((tag) => tag.trim());
+		const images = data.images.split(',').map((image) => image.trim());
+		const old_price = parseFloat(data.old_price);
+		const last_price = parseFloat(data.last_price);
+		// new price should be less than old price
+		if (last_price >= old_price) {
+			toast.error('New price should be less than old price');
+			return;
+		}
+		if (description === '') {
+			toast.error('Description is required');
+			return;
+		}
+		const stock = parseInt(data.stock);
+		const modifiedData = {
+			...data,
+			tags,
+			images,
+			old_price,
+			last_price,
+			stock,
+			description
+		};
+
+		try {
+			const response = await addProduct(modifiedData).unwrap();
+			console.log({ response });
+			if (response?.success) {
+				toast.success('Product added successfully');
+				navigate('/products');
+			}
+		} catch (error) {
+			toast.error(error?.data?.message || 'Something went wrong');
+		}
 	};
 	return (
 		<Box
@@ -48,6 +86,7 @@ const AddProduct = () => {
 				</Stack>
 				<KInput name='tags' label='Tags' />
 				<KInput name='short_description' label='Short Description' multiline />
+				<KInput name='images' label='Images' multiline />
 				<br />
 				<TextEditor content={description} setContent={setDescription} />
 				<Button
@@ -59,7 +98,7 @@ const AddProduct = () => {
 						my: 2
 					}}
 				>
-					Add Product
+					{isLoading ? 'Loading...' : 'Add Product'}
 				</Button>
 			</KForm>
 		</Box>
@@ -67,7 +106,3 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
-
-// export type TProduct = {
-// 	images: string[],
-// };
