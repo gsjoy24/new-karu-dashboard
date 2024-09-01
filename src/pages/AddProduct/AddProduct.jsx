@@ -1,8 +1,10 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
+import { useState } from 'react';
 import KForm from '../../components/Form/KForm';
 import KInput from '../../components/Form/KInput';
 import KSelect from '../../components/Form/KSelect';
+import TextEditor from '../../components/TextEditor';
 import { useGetCategoryQuery } from '../../redux/features/categoryApi';
 
 const AddProduct = () => {
@@ -15,13 +17,18 @@ const AddProduct = () => {
 			?.map((category) => category.subcategories)
 			.flat()
 			.map((subCategory) => ({ value: subCategory._id, label: subCategory.name })) || [];
+	const [description, setDescription] = useState('');
 
 	const onSubmit = (data) => {
 		console.log(data);
 	};
 	return (
-		<Box>
-			<Typography variant='h2' gutterBottom>
+		<Box
+			sx={{
+				mt: 10
+			}}
+		>
+			<Typography variant='h3' gutterBottom>
 				Add Product
 			</Typography>
 			<KForm onSubmit={onSubmit}>
@@ -41,6 +48,19 @@ const AddProduct = () => {
 				</Stack>
 				<KInput name='tags' label='Tags' />
 				<KInput name='short_description' label='Short Description' multiline />
+				<br />
+				<TextEditor content={description} setContent={setDescription} />
+				<Button
+					type='submit'
+					variant='contained'
+					color='primary'
+					fullWidth
+					sx={{
+						my: 2
+					}}
+				>
+					Add Product
+				</Button>
 			</KForm>
 		</Box>
 	);
@@ -49,6 +69,5 @@ const AddProduct = () => {
 export default AddProduct;
 
 // export type TProduct = {
-// 	description: string,
 // 	images: string[],
 // };
