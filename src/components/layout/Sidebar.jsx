@@ -1,45 +1,13 @@
-import BorderAllIcon from '@mui/icons-material/BorderAll';
-import CategoryIcon from '@mui/icons-material/Category';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import PeopleIcon from '@mui/icons-material/People';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import Box from '@mui/material/Box';
 import { NavLink } from 'react-router-dom';
-
-const links = [
-	{
-		title: 'Dashboard',
-		icon: <DashboardIcon />,
-		link: '/'
-	},
-	{
-		title: 'Orders',
-		icon: <BorderAllIcon />,
-		link: '/orders'
-	},
-	{
-		title: 'Users',
-		icon: <PeopleIcon />,
-		link: '/orders'
-	},
-	{
-		title: 'Products',
-		icon: <ProductionQuantityLimitsIcon />,
-		link: '/products'
-	},
-	{
-		title: 'Category',
-		icon: <CategoryIcon />,
-		link: '/category'
-	}
-];
+import NavLinks from '../../constant';
 
 const Sidebar = ({ open }) => {
 	return (
 		<Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
 			<List sx={{ flexGrow: 1 }}>
-				{links.map((link) => (
+				{NavLinks.map((link) => (
 					<ListItem
 						key={link.title}
 						disablePadding

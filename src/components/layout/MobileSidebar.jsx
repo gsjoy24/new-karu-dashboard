@@ -1,10 +1,5 @@
-import BorderAllIcon from '@mui/icons-material/BorderAll';
-import CategoryIcon from '@mui/icons-material/Category';
 import CloseIcon from '@mui/icons-material/Close';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import PeopleIcon from '@mui/icons-material/People';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import {
 	Drawer,
 	IconButton,
@@ -18,34 +13,7 @@ import {
 import Box from '@mui/material/Box';
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
-const links = [
-	{
-		title: 'Dashboard',
-		icon: <DashboardIcon />,
-		link: '/'
-	},
-	{
-		title: 'Orders',
-		icon: <BorderAllIcon />,
-		link: '/orders'
-	},
-	{
-		title: 'Users',
-		icon: <PeopleIcon />,
-		link: '/orders'
-	},
-	{
-		title: 'Products',
-		icon: <ProductionQuantityLimitsIcon />,
-		link: '/products'
-	},
-	{
-		title: 'Category',
-		icon: <CategoryIcon />,
-		link: '/category'
-	}
-];
+import NavLinks from '../../constant';
 
 const MobileSidebar = () => {
 	const [open, setOpen] = useState(false);
@@ -74,7 +42,7 @@ const MobileSidebar = () => {
 					</IconButton>
 				</Box>
 				<List>
-					{links.map((link) => (
+					{NavLinks.map((link) => (
 						<ListItem key={link.title} disablePadding onClick={() => setOpen(false)}>
 							<ListItemButton
 								component={NavLink}

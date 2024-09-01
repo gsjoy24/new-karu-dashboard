@@ -1,4 +1,4 @@
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, FormHelperText, MenuItem, Select } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CiWarning } from 'react-icons/ci';
 
@@ -10,13 +10,13 @@ const KSelect = ({ label, options, name, sx }) => {
 			control={control}
 			name={name}
 			render={({ field, fieldState: { error } }) => (
-				<FormControl sx={sx ? { ...sx } : { width: '100%' }} disabled={!options}>
-					<InputLabel id='demo-select-small-label'>{label}</InputLabel>
+				<FormControl sx={sx ? { ...sx } : { width: '100%', mb: '5px' }} disabled={!options}>
+					<p>{label}</p>
 					<Select
 						labelId='demo-simple-select-label'
 						id='demo-simple-select'
 						{...field}
-						label={label}
+						disabled={[...options]?.length ? false : true}
 						placeholder={label}
 						variant='outlined'
 						size='small'

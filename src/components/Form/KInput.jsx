@@ -10,7 +10,7 @@ const KInput = ({ label, type = 'text', ariaLabel, name, placeholder, sx, multil
 			control={control}
 			name={name}
 			render={({ field, fieldState: { error } }) => (
-				<div className='w-full'>
+				<div className='w-full mb-3'>
 					<label htmlFor={name} className='text-sm font-medium text-gray-700'>
 						{label}
 					</label>
