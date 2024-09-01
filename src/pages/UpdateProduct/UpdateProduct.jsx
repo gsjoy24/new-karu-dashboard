@@ -1,17 +1,35 @@
 import { Button, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import KForm from '../../components/Form/KForm';
 import KInput from '../../components/Form/KInput';
 import KSelect from '../../components/Form/KSelect';
 import TextEditor from '../../components/TextEditor';
 import { useGetCategoryQuery } from '../../redux/features/categoryApi';
-import { useAddProductMutation } from '../../redux/features/productApi';
+import { useGetProductQuery, useUpdateProductMutation } from '../../redux/features/productApi';
 
-const AddProduct = () => {
+const UpdateProduct = () => {
 	const navigate = useNavigate();
+	const [searchParams] = useSearchParams();
+	const productId = searchParams.get('id');
+	const { data: product, isLoading } = useGetProductQuery(productId || '');
+	const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
+
+	const defaultValues = {
+		name: product?.data?.name || '',
+		serial_number: product?.data?.serial_number || '',
+		stock: product?.data?.stock || '',
+		old_price: product?.data?.old_price || '',
+		last_price: product?.data?.last_price || '',
+		category: product?.data?.category?._id || '',
+		sub_category: product?.data?.sub_category?._id || '',
+		tags: product?.data?.tags?.join(', ') || '',
+		short_description: product?.data?.short_description || '',
+		images: product?.data?.images?.join(', ') || ''
+	};
+
 	const { data: categories } = useGetCategoryQuery({});
 	const categoryOptions = categories?.data?.map((category) => ({ value: category._id, label: category.name })) || [];
 
@@ -22,7 +40,9 @@ const AddProduct = () => {
 			.map((subCategory) => ({ value: subCategory._id, label: subCategory.name })) || [];
 	const [description, setDescription] = useState('');
 
-	const [addProduct, { isLoading }] = useAddProductMutation();
+	if (!product?.success) {
+		return <h1 className='mt-[200px]'>Product not found</h1>;
+	}
 
 	const onSubmit = async (data) => {
 		const tags = data.tags.split(',').map((tag) => tag.trim());
@@ -34,10 +54,7 @@ const AddProduct = () => {
 			toast.error('New price should be less than old price');
 			return;
 		}
-		if (description === '') {
-			toast.error('Description is required');
-			return;
-		}
+
 		const stock = parseInt(data.stock);
 		const modifiedData = {
 			...data,
@@ -45,30 +62,38 @@ const AddProduct = () => {
 			images,
 			old_price,
 			last_price,
-			stock,
-			description
+			stock
 		};
+		if (description.length > 0) {
+			modifiedData.description = description;
+		} else {
+			modifiedData.description = product.data.description;
+		}
 
 		try {
-			const response = await addProduct(modifiedData).unwrap();
+			const response = await updateProduct({ productId, modifiedData }).unwrap();
+			console.log({ response });
 			if (response?.success) {
-				toast.success('Product added successfully');
+				toast.success('Product updated successfully');
 				navigate('/products');
 			}
 		} catch (error) {
 			toast.error(error?.data?.message || 'Something went wrong');
 		}
 	};
-	return (
+
+	return isLoading ? (
+		<></>
+	) : (
 		<Box
 			sx={{
 				mt: 10
 			}}
 		>
 			<Typography variant='h3' gutterBottom>
-				Add Product
+				Update Product
 			</Typography>
-			<KForm onSubmit={onSubmit}>
+			<KForm onSubmit={onSubmit} defaultValues={defaultValues}>
 				<Stack direction={{ xs: 'column', sm: 'row' }} gap={1} sx={{ width: '100%' }}>
 					<KInput name='name' label='Name' />
 					<KInput name='serial_number' label='Serial Number' />
@@ -87,7 +112,7 @@ const AddProduct = () => {
 				<KInput name='short_description' label='Short Description' multiline />
 				<KInput name='images' label='Images' multiline />
 				<br />
-				<TextEditor content={description} setContent={setDescription} />
+				<TextEditor content={product?.data?.description || ''} setContent={setDescription} />
 				<Button
 					type='submit'
 					variant='contained'
@@ -97,11 +122,11 @@ const AddProduct = () => {
 						my: 2
 					}}
 				>
-					{isLoading ? 'Loading...' : 'Add Product'}
+					{isUpdating ? 'Loading...' : 'Update Product'}
 				</Button>
 			</KForm>
 		</Box>
 	);
 };
 
-export default AddProduct;
+export default UpdateProduct;

@@ -20,8 +20,26 @@ const productApi = baseApi.injectEndpoints({
 				};
 			},
 			providesTags: ['products']
+		}),
+		getProduct: builder.query({
+			query: (id) => {
+				return {
+					url: `/products/id/${id}`,
+					method: 'GET'
+				};
+			}
+		}),
+		updateProduct: builder.mutation({
+			query: ({ productId, modifiedData }) => {
+				return {
+					url: `/products/update/${productId}`,
+					method: 'PUT',
+					body: modifiedData
+				};
+			},
+			invalidatesTags: ['products']
 		})
 	})
 });
 
-export const { useAddProductMutation, useGetProductsQuery } = productApi;
+export const { useAddProductMutation, useGetProductsQuery, useGetProductQuery, useUpdateProductMutation } = productApi;
