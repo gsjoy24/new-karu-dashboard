@@ -2,7 +2,17 @@ import { TextField } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CiWarning } from 'react-icons/ci';
 
-const KInput = ({ label, type = 'text', ariaLabel, name, placeholder, sx, multiline = false, rows }) => {
+const KInput = ({
+	label,
+	type = 'text',
+	ariaLabel,
+	name,
+	placeholder,
+	sx,
+	multiline = false,
+	rows,
+	required = true
+}) => {
 	const { control } = useFormContext();
 
 	return (
@@ -17,6 +27,7 @@ const KInput = ({ label, type = 'text', ariaLabel, name, placeholder, sx, multil
 					<TextField
 						{...field}
 						aria-label={ariaLabel || placeholder}
+						required={required}
 						inputProps={{ autoComplete: name }}
 						sx={{ ...sx, width: '100%', borderRadius: '5px' }}
 						placeholder={placeholder || label}

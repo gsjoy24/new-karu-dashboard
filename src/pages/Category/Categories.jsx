@@ -1,7 +1,5 @@
 import {
 	Box,
-	Button,
-	IconButton,
 	Paper,
 	Skeleton,
 	Stack,
@@ -12,10 +10,10 @@ import {
 	TableHead,
 	TableRow
 } from '@mui/material';
-import { FaRegPenToSquare } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
 import PageTitle from '../../components/Shared/PageTitle';
 import { useGetCategoryQuery } from '../../redux/features/categoryApi';
+import AddCategoryModal from './AddCategoryModal';
+import UpdateCategoryModal from './UpdateCategoryModal';
 
 const tableHeadings = ['#', 'Name', 'Description', 'Actions'];
 
@@ -31,9 +29,7 @@ const Categories = () => {
 		>
 			<Stack direction='row' justifyContent='space-between' alignItems='center'>
 				<PageTitle title='Categories' />
-				<Button component={Link} to='/add-product' variant='contained'>
-					Add Category
-				</Button>
+				<AddCategoryModal />
 			</Stack>
 			<TableContainer component={Paper} sx={{ my: 3, borderRadius: 5 }}>
 				{!isFetching ? (
@@ -62,9 +58,7 @@ const Categories = () => {
 										{category?.description}
 									</TableCell>
 									<TableCell align='center'>
-										<IconButton component={Link} to={`/update-product/${category._id}`}>
-											<FaRegPenToSquare />
-										</IconButton>
+										<UpdateCategoryModal category={category} />
 									</TableCell>
 								</TableRow>
 							))}
