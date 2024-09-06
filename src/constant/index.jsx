@@ -13,7 +13,7 @@ const NavLinks = [
 	{
 		title: 'Users',
 		icon: <PeopleIcon />,
-		link: '/orders'
+		link: '/users'
 	},
 	{
 		title: 'Orders',

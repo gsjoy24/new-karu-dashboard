@@ -6,6 +6,7 @@ import DashboardManagement from '../pages/Dashboard/DashboardManagement';
 import Login from '../pages/Login/Login';
 import Products from '../pages/Products/Products';
 import UpdateProduct from '../pages/UpdateProduct/UpdateProduct';
+import Users from '../pages/Users/Users';
 
 const router = createBrowserRouter([
 	{
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
 			{
 				path: '/categories',
 				element: <Categories />
+			},
+			{
+				path: 'users',
+				element: <Users />
 			}
 		]
 	},

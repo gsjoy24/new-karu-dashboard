@@ -23,7 +23,6 @@ const UpdateCategoryModal = ({ category }) => {
 				id: category._id,
 				data
 			}).unwrap();
-			console.log(response);
 			if (response?.success) {
 				setOpen(false);
 				toast.success('Category updated successfully');
