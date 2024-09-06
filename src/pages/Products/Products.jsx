@@ -1,5 +1,6 @@
 import {
 	Box,
+	IconButton,
 	Pagination,
 	Paper,
 	Skeleton,
@@ -13,9 +14,9 @@ import {
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
+import { FaRegPenToSquare } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 import { useGetProductsQuery } from '../../redux/features/productApi';
-// import DeleteProduct from './components/DeleteProduct';
-// import UpdatedProduct from './components/UpdatedProduct';
 
 const Products = () => {
 	const [page, setPage] = useState(1);
@@ -113,10 +114,9 @@ const Products = () => {
 										{product?.last_price}
 									</TableCell>
 									<TableCell align='center'>
-										<Stack direction='row' spacing={1}>
-											{/* <UpdatedProduct product={product} />
-											<DeleteProduct id={product._id} /> */}
-										</Stack>
+										<IconButton component={Link} to={`/update-product?id=${product._id}`}>
+											<FaRegPenToSquare />
+										</IconButton>
 									</TableCell>
 								</TableRow>
 							))}
