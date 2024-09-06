@@ -1,4 +1,3 @@
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BorderAllIcon from '@mui/icons-material/BorderAll';
 import CategoryIcon from '@mui/icons-material/Category';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -22,19 +21,14 @@ const NavLinks = [
 		link: '/orders'
 	},
 	{
-		title: 'Add Product',
-		icon: <AddCircleIcon />,
-		link: '/add-product'
-	},
-	{
 		title: 'Products',
 		icon: <ProductionQuantityLimitsIcon />,
 		link: '/products'
 	},
 	{
-		title: 'Category',
+		title: 'Categories',
 		icon: <CategoryIcon />,
-		link: '/category'
+		link: '/categories'
 	}
 ];
 

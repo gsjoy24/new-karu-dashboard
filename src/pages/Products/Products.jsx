@@ -1,5 +1,6 @@
 import {
 	Box,
+	Button,
 	IconButton,
 	Pagination,
 	Paper,
@@ -9,13 +10,13 @@ import {
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow,
-	Typography
+	TableRow
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
 import { FaRegPenToSquare } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import PageTitle from '../../components/Shared/PageTitle';
 import { useGetProductsQuery } from '../../redux/features/productApi';
 
 const Products = () => {
@@ -41,9 +42,10 @@ const Products = () => {
 			}}
 		>
 			<Stack direction='row' justifyContent='space-between' alignItems='center'>
-				<Typography variant='h4' sx={{ mt: 2 }}>
-					Product List
-				</Typography>
+				<PageTitle title='Products' />
+				<Button component={Link} to='/add-product' variant='contained'>
+					Add Product
+				</Button>
 			</Stack>
 
 			<TableContainer component={Paper} sx={{ my: 3, borderRadius: 5 }}>
