@@ -72,7 +72,6 @@ const UpdateProduct = () => {
 
 		try {
 			const response = await updateProduct({ productId, modifiedData }).unwrap();
-			console.log({ response });
 			if (response?.success) {
 				toast.success('Product updated successfully');
 				navigate('/products');
