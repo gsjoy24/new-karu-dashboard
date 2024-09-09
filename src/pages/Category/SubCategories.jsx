@@ -14,7 +14,7 @@ import {
 import { useState } from 'react';
 import CGModal from '../../components/Modal/CGModal';
 import PageTitle from '../../components/Shared/PageTitle';
-import AddCategoryModal from './AddCategoryModal';
+import AddSubCategoryModal from './AddSubCategoryModal';
 import UpdateSubCategory from './UpdateSubCategory';
 
 const tableHeadings = ['#', 'Name', 'Description', 'Actions'];
@@ -40,7 +40,7 @@ const SubCategories = ({ category }) => {
 									: `No subcategories found for ${category?.name}`
 							}
 						/>
-						<AddCategoryModal />
+						<AddSubCategoryModal categoryId={category?._id} />
 					</Stack>
 					<TableContainer component={Paper} sx={{ my: 3, borderRadius: 5 }}>
 						{category?.subcategories?.length ? (

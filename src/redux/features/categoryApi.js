@@ -29,7 +29,7 @@ const categoryApi = baseApi.injectEndpoints({
 					body: data
 				};
 			},
-			invalidatesTags: ['sub-categories']
+			invalidatesTags: ['categories']
 		}),
 		updateCategory: builder.mutation({
 			query: ({ id, data }) => {
@@ -58,7 +58,7 @@ const categoryApi = baseApi.injectEndpoints({
 					body: data
 				};
 			},
-			invalidatesTags: ['sub-categories', 'categories']
+			invalidatesTags: ['categories']
 		})
 	})
 });
