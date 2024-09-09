@@ -13,9 +13,10 @@ import {
 import PageTitle from '../../components/Shared/PageTitle';
 import { useGetCategoryQuery } from '../../redux/features/categoryApi';
 import AddCategoryModal from './AddCategoryModal';
+import SubCategories from './SubCategories';
 import UpdateCategoryModal from './UpdateCategoryModal';
 
-const tableHeadings = ['#', 'Name', 'Description', 'Actions'];
+const tableHeadings = ['#', 'Name', 'Description', 'Sub Categories', 'Actions'];
 
 const Categories = () => {
 	const { data, isFetching } = useGetCategoryQuery();
@@ -56,6 +57,9 @@ const Categories = () => {
 										}}
 									>
 										{category?.description}
+									</TableCell>
+									<TableCell align='center'>
+										<SubCategories category={category} />
 									</TableCell>
 									<TableCell align='center'>
 										<UpdateCategoryModal category={category} />
