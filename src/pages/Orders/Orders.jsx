@@ -63,7 +63,7 @@ const Orders = () => {
 											maxWidth: '100px'
 										}}
 									>
-										<UpdateOrderStatus defaultStatus={order?.status} />
+										<UpdateOrderStatus id={order?._id} defaultStatus={order?.status} />
 									</TableCell>
 								</TableRow>
 							))}
