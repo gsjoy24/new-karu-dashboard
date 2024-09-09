@@ -49,6 +49,16 @@ const categoryApi = baseApi.injectEndpoints({
 				};
 			},
 			providesTags: ['sub-categories']
+		}),
+		updatedSubCategory: builder.mutation({
+			query: ({ id, data }) => {
+				return {
+					url: `/subcategories/${id}`,
+					method: 'PUT',
+					body: data
+				};
+			},
+			invalidatesTags: ['sub-categories', 'categories']
 		})
 	})
 });
@@ -58,5 +68,6 @@ export const {
 	useGetCategoryQuery,
 	useAddSubCategoryMutation,
 	useGetSubCategoryQuery,
-	useUpdateCategoryMutation
+	useUpdateCategoryMutation,
+	useUpdatedSubCategoryMutation
 } = categoryApi;

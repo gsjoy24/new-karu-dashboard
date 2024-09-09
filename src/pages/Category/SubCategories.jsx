@@ -15,7 +15,7 @@ import { useState } from 'react';
 import CGModal from '../../components/Modal/CGModal';
 import PageTitle from '../../components/Shared/PageTitle';
 import AddCategoryModal from './AddCategoryModal';
-import UpdateCategoryModal from './UpdateCategoryModal';
+import UpdateSubCategory from './UpdateSubCategory';
 
 const tableHeadings = ['#', 'Name', 'Description', 'Actions'];
 
@@ -58,7 +58,7 @@ const SubCategories = ({ category }) => {
 									{category?.subcategories?.map((subcategory, index) => (
 										<TableRow key={subcategory._id}>
 											<TableCell align='center'>{index + 1}</TableCell>
-											<TableCell align='center'>{category?.name}</TableCell>
+											<TableCell align='center'>{subcategory?.name}</TableCell>
 											<TableCell
 												align='center'
 												sx={{
@@ -69,7 +69,7 @@ const SubCategories = ({ category }) => {
 												{subcategory?.description}
 											</TableCell>
 											<TableCell align='center'>
-												<UpdateCategoryModal category={category} />
+												<UpdateSubCategory category={subcategory} />
 											</TableCell>
 										</TableRow>
 									))}
