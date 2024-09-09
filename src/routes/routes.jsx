@@ -4,6 +4,7 @@ import AddProduct from '../pages/AddProduct/AddProduct';
 import Categories from '../pages/Category/Categories';
 import DashboardManagement from '../pages/Dashboard/DashboardManagement';
 import Login from '../pages/Login/Login';
+import Orders from '../pages/Orders/Orders';
 import Products from '../pages/Products/Products';
 import UpdateProduct from '../pages/UpdateProduct/UpdateProduct';
 import Users from '../pages/Users/Users';
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
 			{
 				path: 'users',
 				element: <Users />
+			},
+			{
+				path: 'orders',
+				element: <Orders />
 			}
 		]
 	},
