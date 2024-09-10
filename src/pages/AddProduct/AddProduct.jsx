@@ -71,7 +71,7 @@ const AddProduct = () => {
 			<KForm onSubmit={onSubmit}>
 				<Stack direction={{ xs: 'column', sm: 'row' }} gap={1} sx={{ width: '100%' }}>
 					<KInput name='name' label='Name' />
-					<KInput name='serial_number' label='Serial Number' />
+					<KInput name='sku' label='SKU' />
 				</Stack>
 
 				<Stack direction={{ xs: 'column', sm: 'row' }} gap={1} sx={{ width: '100%' }}>

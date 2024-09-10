@@ -19,7 +19,7 @@ const UpdateProduct = () => {
 
 	const defaultValues = {
 		name: product?.data?.name || '',
-		serial_number: product?.data?.serial_number || '',
+		sku: product?.data?.sku || '',
 		stock: product?.data?.stock || '',
 		old_price: product?.data?.old_price || '',
 		last_price: product?.data?.last_price || '',
@@ -95,7 +95,7 @@ const UpdateProduct = () => {
 			<KForm onSubmit={onSubmit} defaultValues={defaultValues}>
 				<Stack direction={{ xs: 'column', sm: 'row' }} gap={1} sx={{ width: '100%' }}>
 					<KInput name='name' label='Name' />
-					<KInput name='serial_number' label='Serial Number' />
+					<KInput name='sku' label='SKU' />
 				</Stack>
 
 				<Stack direction={{ xs: 'column', sm: 'row' }} gap={1} sx={{ width: '100%' }}>
