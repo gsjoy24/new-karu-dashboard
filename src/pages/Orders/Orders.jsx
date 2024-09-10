@@ -9,7 +9,6 @@ const tableHeadings = ['#', 'Order ID', 'Customer', 'Products', 'Status'];
 
 const Orders = () => {
 	const { data, isFetching } = useGetOrdersQuery({});
-	console.log(data);
 	return (
 		<Box
 			sx={{

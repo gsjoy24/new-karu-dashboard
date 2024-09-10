@@ -18,8 +18,6 @@ const AddSubCategoryModal = ({ categoryId }) => {
 				category: categoryId
 			}).unwrap();
 
-			console.log({ response });
-
 			if (response?.success) {
 				setOpen(false);
 				toast.success('New Subcategory added successfully');

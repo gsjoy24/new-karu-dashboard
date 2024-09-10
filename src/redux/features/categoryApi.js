@@ -19,7 +19,13 @@ const categoryApi = baseApi.injectEndpoints({
 					method: 'GET'
 				};
 			},
-			providesTags: ['categories']
+			providesTags: (result) => {
+				if (result.success) {
+					const data = result.data;
+					return data ? [{ type: 'category', id: data.id }] : [{ type: 'category' }];
+				}
+				return [{ type: 'category' }];
+			}
 		}),
 		addSubCategory: builder.mutation({
 			query: (data) => {

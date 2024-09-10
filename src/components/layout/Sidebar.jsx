@@ -27,7 +27,8 @@ const Sidebar = ({ open }) => {
 								px: 4,
 								display: 'flex',
 								'&.active': {
-									bgcolor: '#f1f1f1'
+									bgcolor: '#4E91FD',
+									color: '#fff'
 								}
 							}}
 						>
@@ -36,7 +37,8 @@ const Sidebar = ({ open }) => {
 									minWidth: 0,
 									mr: 3,
 									justifyContent: 'center',
-									fontSize: 30
+									fontSize: 30,
+									color: 'inherit'
 								}}
 							>
 								{link.icon}
