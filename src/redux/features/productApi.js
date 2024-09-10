@@ -10,7 +10,7 @@ const productApi = baseApi.injectEndpoints({
 					body: data
 				};
 			},
-			invalidatesTags: ['products']
+			invalidatesTags: ['products', 'dashboard']
 		}),
 		getProducts: builder.query({
 			query: () => {
