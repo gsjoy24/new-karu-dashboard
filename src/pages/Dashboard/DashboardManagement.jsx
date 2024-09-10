@@ -3,7 +3,7 @@ import { useGetDashboardQuery } from '../../redux/features/dashboardApi';
 
 const DashboardManagement = () => {
 	const { data, isFetching } = useGetDashboardQuery({});
-	console.log(data);
+
 	const mainData = data?.data || {};
 	return isFetching ? (
 		<Box
