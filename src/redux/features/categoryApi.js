@@ -3,68 +3,64 @@ import { baseApi } from '../api/baseApi';
 const categoryApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
 		addCategory: builder.mutation({
-			query: (data) => {
-				return {
-					url: `/categories`,
-					method: 'POST',
-					body: data
-				};
-			},
-			invalidatesTags: ['categories']
+			query: (data) => ({
+				url: `/categories`,
+				method: 'POST',
+				body: data
+			}),
+			invalidatesTags: [{ type: 'Category', id: 'LIST' }]
 		}),
 		getCategory: builder.query({
-			query: () => {
-				return {
-					url: `/categories`,
-					method: 'GET'
-				};
-			},
+			query: () => ({
+				url: `/categories`,
+				method: 'GET'
+			}),
 			providesTags: (result) => {
-				if (result.success) {
-					const data = result.data;
-					return data ? [{ type: 'category', id: data.id }] : [{ type: 'category' }];
+				if (result?.success && Array.isArray(result.data)) {
+					return result.data.length
+						? result.data.map((category) => ({ type: 'Category', id: category._id }))
+						: [{ type: 'Category', id: 'LIST' }];
 				}
-				return [{ type: 'category' }];
+				return [{ type: 'Category', id: 'LIST' }];
 			}
 		}),
 		addSubCategory: builder.mutation({
-			query: (data) => {
-				return {
-					url: `/subcategories`,
-					method: 'POST',
-					body: data
-				};
-			},
-			invalidatesTags: ['categories']
+			query: (data) => ({
+				url: `/subcategories`,
+				method: 'POST',
+				body: data
+			}),
+			invalidatesTags: [{ type: 'SubCategory', id: 'LIST' }]
 		}),
 		updateCategory: builder.mutation({
-			query: ({ id, data }) => {
-				return {
-					url: `/categories/${id}`,
-					method: 'PUT',
-					body: data
-				};
-			},
-			invalidatesTags: ['categories']
+			query: ({ id, data }) => ({
+				url: `/categories/${id}`,
+				method: 'PUT',
+				body: data
+			}),
+			invalidatesTags: (result, error, { id }) => [{ type: 'Category', id }]
 		}),
 		getSubCategory: builder.query({
-			query: () => {
-				return {
-					url: `/subcategories`,
-					method: 'GET'
-				};
-			},
-			providesTags: ['sub-categories']
+			query: () => ({
+				url: `/subcategories`,
+				method: 'GET'
+			}),
+			providesTags: (result) => {
+				if (result?.success && Array.isArray(result.data)) {
+					return result.data.length
+						? result.data.map((subCategory) => ({ type: 'SubCategory', id: subCategory._id }))
+						: [{ type: 'SubCategory', id: 'LIST' }];
+				}
+				return [{ type: 'SubCategory', id: 'LIST' }];
+			}
 		}),
-		updatedSubCategory: builder.mutation({
-			query: ({ id, data }) => {
-				return {
-					url: `/subcategories/${id}`,
-					method: 'PUT',
-					body: data
-				};
-			},
-			invalidatesTags: ['categories']
+		updateSubCategory: builder.mutation({
+			query: ({ id, data }) => ({
+				url: `/subcategories/${id}`,
+				method: 'PUT',
+				body: data
+			}),
+			invalidatesTags: (result, error, { id }) => [{ type: 'SubCategory', id }]
 		})
 	})
 });
@@ -75,5 +71,5 @@ export const {
 	useAddSubCategoryMutation,
 	useGetSubCategoryQuery,
 	useUpdateCategoryMutation,
-	useUpdatedSubCategoryMutation
+	useUpdateSubCategoryMutation
 } = categoryApi;

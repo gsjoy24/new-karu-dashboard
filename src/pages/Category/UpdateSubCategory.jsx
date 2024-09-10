@@ -6,11 +6,12 @@ import KForm from '../../components/Form/KForm';
 import KInput from '../../components/Form/KInput';
 import CGModal from '../../components/Modal/CGModal';
 import PageTitle from '../../components/Shared/PageTitle';
-import { useUpdatedSubCategoryMutation } from '../../redux/features/categoryApi';
+import { useUpdateSubCategoryMutation } from '../../redux/features/categoryApi';
 
 const UpdateSubCategory = ({ category }) => {
 	const [open, setOpen] = useState(false);
-	const [updatedSubCategory, { isLoading }] = useUpdatedSubCategoryMutation();
+
+	const [updatedSubCategory, { isLoading }] = useUpdateSubCategoryMutation();
 	const defaultValues = {
 		name: category?.name || '',
 		description: category?.description || ''
