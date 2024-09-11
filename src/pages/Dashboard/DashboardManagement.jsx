@@ -96,30 +96,32 @@ const DashboardManagement = () => {
 				</Grid>
 
 				{/* Orders Status Breakdown */}
-				<Grid item xs={12}>
-					<Card sx={{ borderRadius: 3, backgroundColor: '#e8f0fe' }}>
-						<CardContent>
-							<Typography variant='h6' sx={{ fontWeight: 'bold' }}>
-								Orders Status
-							</Typography>
-							<Grid container spacing={2} sx={{ marginTop: '1rem' }}>
-								{Object.entries(mainData?.totalOrders).map(
-									([key, value]) =>
-										key !== 'total' && (
-											<Grid item xs={4} key={key}>
-												<Typography variant='subtitle1' sx={{ textTransform: 'capitalize' }}>
-													{key}
-												</Typography>
-												<Typography variant='h5' sx={{ fontWeight: 'bold', color: '#1a73e8' }}>
-													{value}
-												</Typography>
-											</Grid>
-										)
-								)}
-							</Grid>
-						</CardContent>
-					</Card>
-				</Grid>
+				{mainData?.totalOrders && (
+					<Grid item xs={12}>
+						<Card sx={{ borderRadius: 3, backgroundColor: '#e8f0fe' }}>
+							<CardContent>
+								<Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+									Orders Status
+								</Typography>
+								<Grid container spacing={2} sx={{ marginTop: '1rem' }}>
+									{Object.entries(mainData?.totalOrders).map(
+										([key, value]) =>
+											key !== 'total' && (
+												<Grid item xs={4} key={key}>
+													<Typography variant='subtitle1' sx={{ textTransform: 'capitalize' }}>
+														{key}
+													</Typography>
+													<Typography variant='h5' sx={{ fontWeight: 'bold', color: '#1a73e8' }}>
+														{value}
+													</Typography>
+												</Grid>
+											)
+									)}
+								</Grid>
+							</CardContent>
+						</Card>
+					</Grid>
+				)}
 			</Grid>
 		</Box>
 	);

@@ -19,7 +19,7 @@ import { useGetOrdersQuery } from '../../redux/features/orderApi';
 import Customer from './Customer';
 import UpdateOrderStatus from './UpdateOrderStatus';
 
-const tableHeadings = ['#', 'Order ID', 'Customer', 'Products', 'Status'];
+const tableHeadings = ['#', 'Order ID', 'Customer', 'Products', 'Price', 'Status'];
 
 const Orders = () => {
 	// State for pagination and search
@@ -104,6 +104,7 @@ const Orders = () => {
 											</Box>
 										))}
 									</TableCell>
+									<TableCell align='center'>{order?.total_price}</TableCell>
 									<TableCell
 										align='center'
 										sx={{
