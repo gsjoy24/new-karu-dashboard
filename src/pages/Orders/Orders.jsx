@@ -94,11 +94,11 @@ const Orders = () => {
 												justifyContent={'center'}
 												alignItems={'center'}
 												direction={'row'}
-												gap={2}
+												gap={3}
 												sx={{
 													borderBottom: '1px solid #ccc',
 													width: 'fit-content',
-													margin: '0 auto'
+													margin: '1rem auto'
 												}}
 												key={product.product._id}
 											>
@@ -106,12 +106,12 @@ const Orders = () => {
 													{product.product.name}
 												</Link>
 												<Typography variant='caption' sx={{ display: 'block' }}>
-													{product?.quantity} x {product?.product?.last_price}
+													{product?.quantity} x ৳ {product?.product?.last_price}
 												</Typography>
 											</Stack>
 										))}
 									</TableCell>
-									<TableCell align='center'>{order?.total_price}</TableCell>
+									<TableCell align='center'>৳ {order?.total_price}</TableCell>
 									<TableCell
 										align='center'
 										sx={{
