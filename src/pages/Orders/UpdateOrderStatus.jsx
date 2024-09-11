@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { useUpdateOrderMutation } from '../../redux/features/orderApi';
 
-const OrderStatus = ['pending', 'processing', 'shipped', 'delivered'];
+const OrderStatus = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
 
 const UpdateOrderStatus = ({ id, defaultStatus }) => {
 	const [status, setStatus] = useState(defaultStatus);

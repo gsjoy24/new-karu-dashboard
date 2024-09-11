@@ -9,7 +9,8 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	TextField
+	TextField,
+	Typography
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
@@ -19,7 +20,7 @@ import { useGetOrdersQuery } from '../../redux/features/orderApi';
 import Customer from './Customer';
 import UpdateOrderStatus from './UpdateOrderStatus';
 
-const tableHeadings = ['#', 'Order ID', 'Customer', 'Products', 'Price', 'Status'];
+const tableHeadings = ['#', 'Order ID', 'Customer', 'Products Details', 'Total Price', 'Status'];
 
 const Orders = () => {
 	// State for pagination and search
@@ -89,19 +90,25 @@ const Orders = () => {
 									</TableCell>
 									<TableCell align='center'>
 										{order?.products?.map((product) => (
-											<Box
+											<Stack
+												justifyContent={'center'}
+												alignItems={'center'}
+												direction={'row'}
+												gap={2}
 												sx={{
 													borderBottom: '1px solid #ccc',
 													width: 'fit-content',
-													margin: '0 auto',
-													padding: '3px'
+													margin: '0 auto'
 												}}
 												key={product.product._id}
 											>
 												<Link target='_blank' to={`https://karukon.vercel.app/product/${product?.product?.slug}`}>
 													{product.product.name}
 												</Link>
-											</Box>
+												<Typography variant='caption' sx={{ display: 'block' }}>
+													{product?.quantity} x {product?.product?.last_price}
+												</Typography>
+											</Stack>
 										))}
 									</TableCell>
 									<TableCell align='center'>{order?.total_price}</TableCell>
