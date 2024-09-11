@@ -1,4 +1,18 @@
-import { Box, Paper, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+	Box,
+	Pagination,
+	Paper,
+	Skeleton,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	TextField
+} from '@mui/material';
+import { Stack } from '@mui/system';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageTitle from '../../components/Shared/PageTitle';
 import { useGetOrdersQuery } from '../../redux/features/orderApi';
@@ -8,7 +22,21 @@ import UpdateOrderStatus from './UpdateOrderStatus';
 const tableHeadings = ['#', 'Order ID', 'Customer', 'Products', 'Status'];
 
 const Orders = () => {
-	const { data, isFetching } = useGetOrdersQuery({});
+	// State for pagination and search
+	const [page, setPage] = useState(1);
+	const [searchTerm, setSearchTerm] = useState('');
+	const { data, isFetching } = useGetOrdersQuery({ page, searchTerm });
+	const handlePageChange = (_, value) => {
+		setPage(value);
+	};
+	const handleSearchChange = (event) => {
+		// set one second delay to avoid multiple API calls
+		setTimeout(() => {
+			setSearchTerm(event.target.value);
+			setPage(1);
+		}, 1000);
+	};
+
 	return (
 		<Box
 			sx={{
@@ -17,7 +45,27 @@ const Orders = () => {
 				mx: 'auto'
 			}}
 		>
-			<PageTitle title='Orders' />
+			<Stack
+				sx={{
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					flexDirection: { xs: 'column', sm: 'row' },
+					gap: 2
+				}}
+			>
+				<PageTitle title='Orders' />
+				{/* Search Field */}
+				<TextField
+					sx={{
+						maxWidth: '400px'
+					}}
+					label='Search Orders'
+					variant='outlined'
+					fullWidth
+					onChange={handleSearchChange}
+					placeholder='Search by Order ID or Customer Name'
+				/>
+			</Stack>
 			<TableContainer component={Paper} sx={{ my: 3, borderRadius: 5 }}>
 				{!isFetching ? (
 					<Table sx={{ minWidth: 650 }} size='medium' aria-label='a dense table'>
@@ -33,7 +81,7 @@ const Orders = () => {
 
 						<TableBody>
 							{data?.data?.map((order, index) => (
-								<TableRow key={order._id}>
+								<TableRow key={order?.order_id}>
 									<TableCell align='center'>{index + 1}</TableCell>
 									<TableCell align='center'>{order?.order_id}</TableCell>
 									<TableCell align='center'>
@@ -72,44 +120,14 @@ const Orders = () => {
 					<Skeleton variant='rectangular' height={200} />
 				)}
 			</TableContainer>
+			{/* Pagination Component */}
+			{data?.meta?.totalPages > 1 && (
+				<Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+					<Pagination count={data.meta.totalPages} page={page} onChange={handlePageChange} color='primary' />
+				</Box>
+			)}
 		</Box>
 	);
 };
 
 export default Orders;
-
-// {
-//             "_id": "66dee844f4d88f9beb6f23da",
-//             "order_id": "Covln0909",
-//             "customer": {
-//                 "_id": "66d314e25fd0be946695c77c",
-//                 "name": {
-//                     "firstName": "Gour",
-//                     "lastName": "Saha"
-//                 },
-//                 "email": "goursaha307@gmail.com",
-//                 "role": "user",
-//                 "isEmailConfirmed": true,
-//                 "status": "active",
-//                 "cart": [],
-//                 "createdAt": "2024-08-31T13:04:34.132Z",
-//                 "updatedAt": "2024-09-09T12:21:24.309Z",
-//                 "__v": 3,
-//                 "address": "Eiusmod alias modi b",
-//                 "city": "Daks",
-//                 "district": "asas",
-//                 "mobile_number": "01722222222",
-//                 "total_cart_items": 0,
-//                 "full_name": "Gour Saha",
-//                 "id": "66d314e25fd0be946695c77c"
-//             },
-//             "name": "Gour Chandra Saha",
-//             "phone": "01772528866",
-//             "address": "sdfcsd",
-//             "district": "csdc df",
-//             "city": "dfdf df",
-//             "status": "pending",
-//             "createdAt": "2024-09-09T12:21:24.272Z",
-//             "updatedAt": "2024-09-09T12:21:24.272Z",
-//             "id": "66dee844f4d88f9beb6f23da"
-//         }

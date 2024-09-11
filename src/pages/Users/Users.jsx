@@ -58,7 +58,11 @@ const Users = () => {
 									<TableCell align='center'>{user?.full_name}</TableCell>
 									<TableCell align='center'>{user?.email}</TableCell>
 									<TableCell align='center'>
-										<Chip label={user?.status} color={user?.status === 'active' ? 'success' : 'error'} />
+										<Chip
+											label={user?.status}
+											color={user?.status === 'active' ? 'success' : 'error'}
+											className='uppercase'
+										/>
 									</TableCell>
 									<TableCell align='center'>{user?.createdAt.split('T')[0]}</TableCell>
 									<TableCell align='center'>
