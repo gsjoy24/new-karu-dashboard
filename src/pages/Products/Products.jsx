@@ -10,7 +10,8 @@ import {
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow
+	TableRow,
+	TextField
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useState } from 'react';
@@ -20,16 +21,24 @@ import PageTitle from '../../components/Shared/PageTitle';
 import { useGetProductsQuery } from '../../redux/features/productApi';
 
 const Products = () => {
+	// State for pagination and search
 	const [page, setPage] = useState(1);
-	const query = {};
-	if (page) {
-		query['page'] = page;
-	}
-	const { data, isFetching } = useGetProductsQuery(query);
-
-	const handlePageChange = (event, value) => {
+	const [searchTerm, setSearchTerm] = useState('');
+	const handlePageChange = (_, value) => {
 		setPage(value);
 	};
+	const handleSearchChange = (event) => {
+		// set one second delay to avoid multiple API calls
+		setTimeout(() => {
+			setSearchTerm(event.target.value);
+			setPage(1);
+		}, 1000);
+	};
+
+	const { data, isFetching } = useGetProductsQuery({
+		page,
+		searchTerm
+	});
 
 	const tableHeadings = ['#', 'Name', 'Stock', 'Price', 'Actions'];
 
@@ -41,8 +50,19 @@ const Products = () => {
 				mx: 'auto'
 			}}
 		>
-			<Stack direction='row' justifyContent='space-between' alignItems='center'>
+			<Stack direction='row' justifyContent='space-between' alignItems='center' flexWrap='wrap' gap={2}>
 				<PageTitle title='Products' />
+				{/* Search Field */}
+				<TextField
+					sx={{
+						maxWidth: '400px'
+					}}
+					label='Search Orders'
+					variant='outlined'
+					fullWidth
+					onChange={handleSearchChange}
+					placeholder='Search by Order ID or Customer Name'
+				/>
 				<Button component={Link} to='/add-product' variant='contained'>
 					Add Product
 				</Button>
@@ -130,7 +150,7 @@ const Products = () => {
 			{data?.meta && (
 				<Box display='flex' justifyContent='center' sx={{ my: 3 }}>
 					<Pagination
-						count={data?.meta?.totalPage}
+						count={data?.meta?.totalPages}
 						page={page}
 						onChange={handlePageChange}
 						color='primary'

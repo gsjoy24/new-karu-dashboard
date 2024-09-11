@@ -13,10 +13,19 @@ const productApi = baseApi.injectEndpoints({
 			invalidatesTags: ['products', 'dashboard']
 		}),
 		getProducts: builder.query({
-			query: () => {
+			query: (
+				{ page, searchTerm } = {
+					page: 1,
+					searchTerm: ''
+				}
+			) => {
 				return {
 					url: `/products`,
-					method: 'GET'
+					method: 'GET',
+					params: {
+						page,
+						searchTerm
+					}
 				};
 			},
 			providesTags: ['products']
