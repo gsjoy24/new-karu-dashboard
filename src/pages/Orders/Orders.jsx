@@ -17,10 +17,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageTitle from '../../components/Shared/PageTitle';
 import { useGetOrdersQuery } from '../../redux/features/orderApi';
-import Customer from './Customer';
 import UpdateOrderStatus from './UpdateOrderStatus';
 
-const tableHeadings = ['#', 'Order ID', 'Customer', 'Products Details', 'Total Price', 'Status'];
+const tableHeadings = ['#', 'Order ID', 'Customer', 'Phone', 'Products Details', 'Total Price', 'Status'];
 
 const Orders = () => {
 	// State for pagination and search
@@ -85,9 +84,8 @@ const Orders = () => {
 								<TableRow key={order?.order_id}>
 									<TableCell align='center'>{index + 1}</TableCell>
 									<TableCell align='center'>{order?.order_id}</TableCell>
-									<TableCell align='center'>
-										<Customer orderData={order} />
-									</TableCell>
+									<TableCell align='center'>{order.name}</TableCell>
+									<TableCell align='center'>{order.phone}</TableCell>
 									<TableCell align='center'>
 										{order?.products?.map((product) => (
 											<Stack
