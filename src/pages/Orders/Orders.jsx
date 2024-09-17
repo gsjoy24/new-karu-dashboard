@@ -17,16 +17,17 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageTitle from '../../components/Shared/PageTitle';
 import { useGetOrdersQuery } from '../../redux/features/orderApi';
-import NoteModal from './NoteModal';
+import OrderModal from './OrderModal';
 import UpdateOrderStatus from './UpdateOrderStatus';
 
-const tableHeadings = ['#', 'Order ID', 'Customer', 'Phone', 'Products Details', 'Note', 'Total Price', 'Status'];
+const tableHeadings = ['#', 'Order ID', 'Customer', 'Phone', 'Products Details', 'Details', 'Total Price', 'Status'];
 
 const Orders = () => {
 	// State for pagination and search
 	const [page, setPage] = useState(1);
 	const [searchTerm, setSearchTerm] = useState('');
 	const { data, isFetching } = useGetOrdersQuery({ page, searchTerm });
+
 	const handlePageChange = (_, value) => {
 		setPage(value);
 	};
@@ -111,7 +112,7 @@ const Orders = () => {
 										))}
 									</TableCell>
 									<TableCell align='center'>
-										<NoteModal orderData={order} />
+										<OrderModal order={order} />
 									</TableCell>
 									<TableCell align='center'>৳ {order?.total_price}</TableCell>
 									<TableCell
