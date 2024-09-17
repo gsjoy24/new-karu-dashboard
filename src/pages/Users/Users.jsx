@@ -58,11 +58,11 @@ const Users = () => {
 					sx={{
 						maxWidth: '400px'
 					}}
-					label='Search Orders'
+					label='Search User'
 					variant='outlined'
 					fullWidth
 					onChange={handleSearchChange}
-					placeholder='Search by Order ID or Customer Name'
+					placeholder='Search by Name or Email'
 				/>
 			</Stack>
 

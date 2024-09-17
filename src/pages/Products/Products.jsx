@@ -57,11 +57,11 @@ const Products = () => {
 					sx={{
 						maxWidth: '400px'
 					}}
-					label='Search Orders'
+					label='Search Products'
 					variant='outlined'
 					fullWidth
 					onChange={handleSearchChange}
-					placeholder='Search by Order ID or Customer Name'
+					placeholder='Search by Product Name'
 				/>
 				<Button component={Link} to='/add-product' variant='contained'>
 					Add Product
