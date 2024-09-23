@@ -1,5 +1,6 @@
 {
   "name": "cg-admin-dashboard",
+  "homepage": "https://dashboard.karukonbd.com/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
